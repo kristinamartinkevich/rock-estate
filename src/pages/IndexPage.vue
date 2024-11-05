@@ -1,47 +1,53 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page>
+    <div class="row items-center justify-evenly q-mt-lg">
+      <q-tabs v-model="selectedTab" dense>
+        <q-tab name="todos" label="Todos" />
+        <q-tab name="maps" label="Maps" />
+      </q-tabs>
+    </div>
+
+    <div v-if="isLoading">
+      <loading-spinner />
+    </div>
+    <div v-else-if="error">
+      <error-message :message="error" />
+    </div>
+    <div v-else>
+      <div v-if="selectedTab === 'todos'">
+        <todo-list-component :todos="todos" />
+      </div>
+      <div v-else-if="selectedTab === 'maps'">
+        <div class="map-placeholder">
+          <map-list-component />
+        </div>
+      </div>
+    </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
+import { useQuery } from '@tanstack/vue-query';
+import { Todo } from 'components/models';
+import TodoListComponent from 'components/TodoList.vue';
+import LoadingSpinner from 'components/LoadingSpinner.vue';
+import MapListComponent from 'components/MapList.vue';
+import ErrorMessage from 'components/ErrorMessage.vue';
+import { fetchTodos } from 'src/utils/apiService';
 import { ref } from 'vue';
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
 
 defineOptions({
-  name: 'IndexPage'
+  name: 'IndexPage',
 });
 
-const todos = ref<Todo[]>([
-  {
-    id: 1,
-    content: 'ct1'
-  },
-  {
-    id: 2,
-    content: 'ct2'
-  },
-  {
-    id: 3,
-    content: 'ct3'
-  },
-  {
-    id: 4,
-    content: 'ct4'
-  },
-  {
-    id: 5,
-    content: 'ct5'
-  }
-]);
+const selectedTab = ref('todos');
 
-const meta = ref<Meta>({
-  totalCount: 1200
+const {
+  data: todos,
+  isLoading,
+  error,
+} = useQuery<Todo[], Error>({
+  queryKey: ['todos'],
+  queryFn: fetchTodos,
 });
 </script>
