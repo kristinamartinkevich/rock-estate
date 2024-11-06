@@ -7,3 +7,49 @@
 body {
   background-color: rgb(244, 246, 249);
 }
+
+.q-tab__label {
+  font-weight: 700;
+}
+
+.sticky-nav {
+  z-index: 100;
+  background-color: #fff;
+  height: 72px;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 2px 9px #0041951a !important;
+}
+
+.my-btn {
+  align-items: center;
+  height: 26px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: box-shadow 0.2s;
+  display: flex;
+  padding: 10px 20px;
+}
+
+.q-card__section--vert {
+  padding: 8px 16px;
+}
+
+.text-h6 {
+  color: #001837;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+}
+.nav-link {
+  color: #798da6;
+  padding: 10px 0;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: block;
+}
+
+.q-header .q-layout__shadow {
+  display: none;
+}

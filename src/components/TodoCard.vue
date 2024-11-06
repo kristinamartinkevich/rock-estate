@@ -1,8 +1,19 @@
 <template>
-  <q-card flat bordered>
-    <q-card-section class="row items-center">
-      <q-checkbox v-model="isCompleted" color="primary" class="col-2" />
-      <div class="col-10 text-h6 ellipsis">{{ props.todo.title }}</div>
+  <q-card flat class="q-mt-sm col-12 rounded shadow-box shadow-3">
+    <q-card-section class="row items-center justify-between">
+      <div
+        class="col-10 ellipsis text-weight-medium"
+        :class="[{ 'text-strike': isCompleted }]"
+      >
+        {{ props.todo.title }}
+      </div>
+      <q-checkbox
+        v-model="isCompleted"
+        color="primary"
+        checked-icon="task_alt"
+        unchecked-icon="highlight_off"
+        class="col-1"
+      />
     </q-card-section>
   </q-card>
 </template>
@@ -27,7 +38,7 @@ const mutation = useMutation({
   onSuccess: () => {
     console.log('Todo completion updated successfully!');
     $q.notify({
-      message: 'Edited todo succesfully.',
+      message: 'Todo edited succesfully.',
       icon: 'announcement',
     });
   },
@@ -40,3 +51,13 @@ watch(isCompleted, (newValue) => {
   mutation.mutate(newValue);
 });
 </script>
+
+<style lang="scss" scoped>
+.title {
+  text-transform: lowercase;
+}
+
+.title::first-letter {
+  text-transform: uppercase;
+}
+</style>
